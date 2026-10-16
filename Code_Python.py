@@ -39,47 +39,32 @@ def write_json(nom_capteur, mesures_nettoyées: list):
         print(mesures_nettoyées)
         return 
 
+#----Fonction trier-----------
+
+def trier(self) : 
+     capteurs_trier = []
+     mesures = self.mesures_nettoyées
+
+     if len(mesures) > 0 :
+         moyenne = sum(mesures) / len(mesures)
+         capteurs_trier.append(moyenne)
+
+     return capteurs_trier 
+               
 #----Création des différents capteurs -----
 
 temperature = capteur("temperature_bureau", data_2["temperature_bureau"] )
 humidite = capteur ("humidite_serre" , data_2["humidite_serre"])
 pression = capteur ("pression_capteur_ext" , data_2["pression_capteur_ext"])
 luminosite = capteur ("luminosite_atelier" , data_2["luminosite_atelier"])
-vent = capteur ("Vent", data_2["Vent"])
+
 #----Appel des fonctions----
 
 write_json("temperature_bureau", temperature.nettoyer(0,30))
 write_json("humidite_serre" , humidite.nettoyer(60,70))
 write_json("pression_capteur_ext" , pression.nettoyer(1000,1015))
 write_json("luminosite_atelier" , luminosite.nettoyer(400,500))
-write_json("Vent" , vent.nettoyer(0,80))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def trier(self):
-#      if len(self.mesures_nettoyées) == 0:
-#           return 0
-
-#      moyenne = sum(self.mesures_nettoyées) / len(self.mesures_nettoyées)
-#      return moyenne
-
-# mesure = humidite.nettoyer(60, 70)
-# moyenne = humidite.trier()
-
-# write_json("humidite_serre" , humidite.nettoyer(60,70))
-# print("La moyenne de", humidite.nom_capteur, "est :", moyenne)
+write_json("temperature_bureau" , trier(temperature))
+write_json("humidite_serre" , trier(humidite))
+write_json("pression_capteur_ext" , trier(pression))
+write_json("luminosite_moyen" , trier(luminosite))
